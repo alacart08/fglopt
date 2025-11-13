@@ -1,0 +1,22 @@
+[project]
+name = "fglopt"
+version = "0.1.0"
+description = "Functionally graded lattice design toolkit (MVP)"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.26",
+  "scipy>=1.11",
+  "trimesh>=4.4",
+  "pyyaml>=6.0"
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+fglopt = "fglopt.cli:main"

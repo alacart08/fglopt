@@ -1,0 +1,5 @@
+#!/usr/bin/env python3
+from fglopt.main import launch_console
+
+if __name__ == "__main__":
+    launch_console()
