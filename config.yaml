@@ -1,0 +1,7 @@
+input_stl: "example.stl"
+mesh_resolution: 40
+volume_fraction: 0.4
+penalty: 3.0
+material:
+  E: 210e9
+  nu: 0.3

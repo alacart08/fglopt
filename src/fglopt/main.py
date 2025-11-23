@@ -1,4 +1,4 @@
-import yaml
+from src.fglopt.utils.config_loader import ConfigLoader
 
 def launch_console():
     print("Welcome to the FGL Optimizer console.")
@@ -11,23 +11,38 @@ def launch_console():
         if cmd == "exit":
             break
         
+        # Load the configuration files
         elif cmd.startswith("load"):
-            _, fname = cmd.split()
-            with open(fname) as f:
-                config = yaml.safe_load(f)
-            print(f"Config loaded from {fname}.")
-            print("Loaded keys:")
-            for k, v in config.items():
-                print(f"    {k}: {v}")
-        
+            parts = cmd.split(maxsplit=1)
+            if len(parts) != 2:
+                print('Usage: load <config_file>')
+                continue
+
+            fname = parts[1]
+            try:
+                config = ConfigLoader(fname)
+                print(f'Config loaded from {fname}.')
+                print(f'Loaded keys:')
+                for k, v in config.to_dict().items():
+                    print(f'    {k}: {v}')
+            except Exception as e:
+                print(f'Error loaded config file: {e}')
+                config = None
+
+        # Run the optimization loop
         elif cmd == "run topo-opt":
             if not config:
                 print("Load config first.")
             else:
                 run_toplogy_optimization(config)
         
-        elif cmd == "export":
-            print("Exporting lattice... (stub)")
+        # Show the help information
+        elif cmd == "help":
+            print("Commands:")
+            print("  load <file>       Load a YAML config file")
+            print("  run topo-opt      Run topology optimization (stub)")
+            print("  export <file>     Export lattice to STL (stub)")
+            print("  exit              Quit")
         
         elif cmd == "help":
             print("Commands: load <file>, run topo-opt, export, exit")
@@ -36,15 +51,16 @@ def launch_console():
             print("Unknown command.")
 
 
-def run_toplogy_optimization(config):
+def run_toplogy_optimization(config: ConfigLoader):
     print("Starting topology optimization")
-    vf = config['volume_fraction']
-    res = config['mesh_resolution']
-    E = float(config['material']['E'])
-    nu = float(config['material']['nu'])
+
+    vf = config.get('volume_fraction')
+    res = config.get('mesh_resolution')
+    E = config.get_nested('material','E')
+    nu = config.get_nested('material','nu')
 
     print(f"  Volume fraction: {vf}")
     print(f"  Mesh resolution: {res}")
-    print(f"  Young's modulus: {E:.2e}")
+    print(f"  Young's modulus: {E:.2}")
     print(f"  Poisson's ratio: {nu}")
     print("...Optimization not implemented yet (stub)")
