@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class DomainMesh:
@@ -91,3 +92,43 @@ class DomainMesh:
         if self.element_nodes is None:
             raise RuntimeError("Mesh elements not generated.")
         return tuple(self.element_nodes[elem_id])
+    
+
+    def plot(self, title:str=None, show:bool=True, ax=None):
+        """
+        Visualize the structured 2D mesh using matplotlib.
+
+        Draws each quadrilateral element as a polygon.
+        """
+
+        if self.node_coords is None or self.element_nodes is None:
+            raise RuntimeError("Mesh is not generated.")
+
+        # Create axis if not provided
+        created_fig = False
+        if ax is None:
+            fig, ax = plt.subplots()
+            created_fig = True
+
+        # Draw each element
+        for elem in self.element_nodes:
+            # elem = [n0, n1, n2, n3]
+            node_ids = list(elem) + [elem[0]]  # close the loop
+            coords = self.node_coords[node_ids]
+
+            xs = coords[:, 0]
+            ys = coords[:, 1]
+
+            ax.plot(xs, ys, "-k", linewidth=0.7)
+
+        ax.set_aspect("equal")
+        ax.set_xlabel("x")
+        ax.set_ylabel("y")
+
+        if title is None:
+            ax.set_title(f"Mesh: {self.nx} × {self.ny} elements")
+        else:
+            ax.set_title(title)
+
+        if show and created_fig:
+            plt.show()
