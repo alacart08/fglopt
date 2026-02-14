@@ -29,6 +29,22 @@ def launch_console():
                 print(f'Error loaded config file: {e}')
                 config = None
 
+        elif cmd == "plot mesh":
+            
+            if config is None:
+                print("Load config first.")
+            else:
+                from fglopt.mesh.domain_mesh import DomainMesh
+
+                nx = config.get("mesh_resolution")
+                ny = config.get("mesh_height", nx)
+                lx = config.get("length_x", 1.0)
+                ly = config.get("length_y", 1.0)
+
+                mesh = DomainMesh(nx=nx, ny=ny, lx=lx, ly=ly)
+                mesh.plot()
+
+
         # Run the optimization loop
         elif cmd == "run topo-opt":
             if not config:
@@ -41,8 +57,10 @@ def launch_console():
             print("Commands:")
             print("  load <file>       Load a YAML config file")
             print("  run topo-opt      Run topology optimization (stub)")
+            print("  plot mesh         Plot the mesh")
             print("  export <file>     Export lattice to STL (stub)")
             print("  exit              Quit")
+            
         
         elif cmd == "help":
             print("Commands: load <file>, run topo-opt, export, exit")

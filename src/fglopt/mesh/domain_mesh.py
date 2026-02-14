@@ -1,4 +1,8 @@
 import numpy as np
+
+import matplotlib
+matplotlib.use("TkAgg")  # Use non-interactive backend for plotting
+
 import matplotlib.pyplot as plt
 
 
