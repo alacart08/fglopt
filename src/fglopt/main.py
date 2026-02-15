@@ -1,4 +1,39 @@
-from src.fglopt.utils.config_loader import ConfigLoader
+from fglopt.utils.config_loader import ConfigLoader
+from pathlib import Path
+
+import matplotlib
+import matplotlib.pyplot as plt
+
+
+def _has_gui_backend() -> bool:
+    """Return True when matplotlib is using an interactive GUI backend."""
+    backend = matplotlib.get_backend().lower()
+    interactive_backends = {name.lower() for name in matplotlib.rcsetup.interactive_bk}
+    return backend in interactive_backends
+
+
+def plot_mesh_from_config(config: ConfigLoader, output_path: str = "artifacts/mesh.png") -> None:
+    """Plot mesh to screen when GUI backend exists, otherwise save to disk."""
+    from fglopt.mesh.domain_mesh import DomainMesh
+
+    nx = config.get("mesh_resolution")
+    ny = config.get("mesh_height", nx)
+    lx = config.get("length_x", 1.0)
+    ly = config.get("length_y", 1.0)
+
+    mesh = DomainMesh(nx=nx, ny=ny, lx=lx, ly=ly)
+
+    if _has_gui_backend():
+        mesh.plot(show=True)
+        return
+
+    output = Path(output_path)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    fig, ax = plt.subplots()
+    mesh.plot(show=False, ax=ax)
+    fig.savefig(output)
+    plt.close(fig)
+    print(f"Saved mesh plot to {output.as_posix()}.")
 
 def launch_console():
     print("Welcome to the FGL Optimizer console.")
@@ -34,15 +69,7 @@ def launch_console():
             if config is None:
                 print("Load config first.")
             else:
-                from fglopt.mesh.domain_mesh import DomainMesh
-
-                nx = config.get("mesh_resolution")
-                ny = config.get("mesh_height", nx)
-                lx = config.get("length_x", 1.0)
-                ly = config.get("length_y", 1.0)
-
-                mesh = DomainMesh(nx=nx, ny=ny, lx=lx, ly=ly)
-                mesh.plot()
+                plot_mesh_from_config(config)
 
 
         # Run the optimization loop
@@ -60,11 +87,7 @@ def launch_console():
             print("  plot mesh         Plot the mesh")
             print("  export <file>     Export lattice to STL (stub)")
             print("  exit              Quit")
-            
-        
-        elif cmd == "help":
-            print("Commands: load <file>, run topo-opt, export, exit")
-        
+
         else:
             print("Unknown command.")
 

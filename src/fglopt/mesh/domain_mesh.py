@@ -1,8 +1,5 @@
 import numpy as np
 
-import matplotlib
-matplotlib.use("TkAgg")  # Use non-interactive backend for plotting
-
 import matplotlib.pyplot as plt
 
 
@@ -98,7 +95,7 @@ class DomainMesh:
         return tuple(self.element_nodes[elem_id])
     
 
-    def plot(self, title:str=None, show:bool=True, ax=None):
+    def plot(self, title: str = None, show: bool = True, ax=None):
         """
         Visualize the structured 2D mesh using matplotlib.
 
@@ -136,3 +133,5 @@ class DomainMesh:
 
         if show and created_fig:
             plt.show()
+
+        return ax
