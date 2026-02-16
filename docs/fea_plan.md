@@ -125,7 +125,7 @@ This schema keeps the BC definition geometric and mesh-independent, which makes 
     * Correct sign convention (positive x right, positive y up)
     * Resulting force vector has correct length and sparsity pattern
 
-Status: NOT STARTED
+Status: COMPLETE
 
 ---
 
