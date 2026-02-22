@@ -160,7 +160,7 @@ Status: COMPLETE
     * right-edge downward load
   * In headless mode, the artifact image exists and is non-empty.
 
-Status: NOT STARTED
+Status: COMPLETE
 
 ---
 
