@@ -96,3 +96,11 @@ That means boundary conditions are reused every iteration. A robust, well-tested
 Phase 1 is foundational infrastructure, not cosmetic work.
 
 It ensures that when solver and optimization phases are expanded, the project already has a reliable way to represent real-world constraints and loading scenarios.
+
+## 9) Why BC visualization is its own step
+
+Boundary-condition mistakes are one of the most common FEA failure modes (wrong edge fixed, wrong load direction, or load applied to the wrong nodes).
+
+Because of that, this repository treats BC visualization as a pre-solve validation step, with an explicit Phase 2b before global assembly and solve.
+
+The goal is to make support/load intent visually checkable early, so configuration issues are caught before numerical debugging begins.

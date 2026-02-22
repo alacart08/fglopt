@@ -151,3 +151,11 @@ Agents should:
 This project is research-oriented and iterative.
 
 Stability and clarity are preferred over cleverness.
+
+## Living Plan Alignment
+
+Agents must follow the living implementation phases in `docs/fea_plan.md`:
+
+* Read `docs/fea_plan.md` before implementing any FEA phase work.
+* Implement only the specifically requested phase scope.
+* Update the corresponding phase status in `docs/fea_plan.md` when phase work is completed.
