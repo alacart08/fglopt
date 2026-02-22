@@ -8,6 +8,8 @@ This solver will support a structured quadrilateral (Q4) mesh—where "Q" denote
 
 ---
 
+For a non-implementation overview of FEA concepts and why boundary conditions are foundational in this repository, see `docs/fea_big_picture.md`.
+
 # Design Decisions (Locked In)
 
 * Element type: Bilinear Q4 (4-node quad)
