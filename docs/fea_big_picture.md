@@ -101,6 +101,6 @@ It ensures that when solver and optimization phases are expanded, the project al
 
 Boundary-condition mistakes are one of the most common FEA failure modes (wrong edge fixed, wrong load direction, or load applied to the wrong nodes).
 
-Because of that, this repository treats BC visualization as a pre-solve validation step, with an explicit Phase 2b before global assembly and solve.
+Because of that, this repository treats BC visualization as a pre-solve validation step, with an explicit Phase 1b before global assembly and solve.
 
 The goal is to make support/load intent visually checkable early, so configuration issues are caught before numerical debugging begins.
