@@ -71,6 +71,25 @@ def launch_console():
             else:
                 plot_mesh_from_config(config)
 
+        elif cmd == "plot bc":
+            if config is None:
+                print("Load config first.")
+            else:
+                from fglopt.fea.bc_manager import BCManager
+                from fglopt.fea.visualization import visualize_boundary_conditions
+                from fglopt.mesh.domain_mesh import DomainMesh
+
+                nx = config.get("mesh_resolution")
+                ny = config.get("mesh_height", nx)
+                lx = config.get("length_x", 1.0)
+                ly = config.get("length_y", 1.0)
+
+                mesh = DomainMesh(nx=nx, ny=ny, lx=lx, ly=ly)
+                bc_manager = BCManager(config)
+                artifact = visualize_boundary_conditions(bc_manager, mesh, show=True)
+                if artifact is not None:
+                    print(f"Saved BC plot to {Path(artifact).as_posix()}.")
+
 
         # Run the optimization loop
         elif cmd == "run topo-opt":
@@ -85,6 +104,7 @@ def launch_console():
             print("  load <file>       Load a YAML config file")
             print("  run topo-opt      Run topology optimization (stub)")
             print("  plot mesh         Plot the mesh")
+            print("  plot bc           Plot supports and loads")
             print("  export <file>     Export lattice to STL (stub)")
             print("  exit              Quit")
 

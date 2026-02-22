@@ -35,7 +35,7 @@ def test_plot_mesh_saves_file_for_non_interactive_backend(tmp_path, monkeypatch,
     assert f"Saved mesh plot to {output_path.as_posix()}." in out
 
 
-def test_help_lists_plot_mesh(monkeypatch, capsys):
+def test_help_lists_plot_commands(monkeypatch, capsys):
     from fglopt.main import launch_console
 
     commands = iter(["help", "exit"])
@@ -45,3 +45,4 @@ def test_help_lists_plot_mesh(monkeypatch, capsys):
 
     out = capsys.readouterr().out
     assert "plot mesh" in out
+    assert "plot bc" in out
