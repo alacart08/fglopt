@@ -184,6 +184,38 @@ Status: NOT STARTED
 
 ---
 
+# Phase 2b — Boundary Condition Visualization
+
+## Goals
+
+* Provide visualization of boundary conditions and loads applied to the mesh (supports + loads overlaid).
+* Distinguish fixed supports vs loads clearly.
+* Support both point loads and edge loads.
+* Work in both GUI and headless environments:
+
+  * If an interactive matplotlib backend exists, show a window.
+  * Otherwise, save an image artifact to disk (e.g., `artifacts/bc_overlay.png`).
+
+## Deliverables
+
+* `visualization.py`
+
+  * Provide a boundary condition visualization helper (e.g., `visualize_boundary_conditions(...)`) that can be called from the BC workflow.
+  * Overlay fixed supports and applied loads using distinct visual encodings.
+  * Handle both point-load and edge-load representations.
+  * Fallback to artifact write-out in headless mode.
+* Acceptance criteria:
+
+  * With the cantilever example config, the plot clearly marks:
+
+    * fixed left edge constraints
+    * right-edge downward load
+  * In headless mode, the artifact image exists and is non-empty.
+
+Status: NOT STARTED
+
+---
+
 # Phase 3 — Global Assembly
 
 ## Goals
