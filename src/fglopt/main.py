@@ -108,6 +108,7 @@ def launch_console():
             print("  export <file>     Export lattice to STL (stub)")
             print("  exit              Quit")
 
+
         else:
             print("Unknown command.")
 

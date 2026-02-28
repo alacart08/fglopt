@@ -20,7 +20,7 @@ def test_load_valid_config(tmp_path):
         mesh_resolution: 40
         volume_fraction: 0.4
         material:
-            E: 210e9
+            E: 210.0e+9
             nu: 0.3
         """
     )
@@ -30,7 +30,7 @@ def test_load_valid_config(tmp_path):
     assert cfg.get("input_stl") == "example.stl"
     assert cfg.get("mesh_resolution") == 40
     assert cfg.get("volume_fraction") == 0.4
-    assert cfg.get_nested("material", "E") == '210e9'
+    assert cfg.get_nested("material", "E") == 210.0e9
     assert cfg.get_nested("material", "nu") == 0.3
 
 
@@ -42,7 +42,7 @@ def test_missing_required_top_level_keys_raises(tmp_path):
         input_stl: "example.stl"
         mesh_resolution: 40
         material:
-          E: 210e9
+          E: 210.0e+9
           nu: 0.3
         """
     )
@@ -76,7 +76,7 @@ def test_get_with_default_and_get_nested_default(tmp_path):
         mesh_resolution: 40
         volume_fraction: 0.4
         material:
-          E: 210e9
+          E: 210.0e+9
           nu: 0.3
         """
     )

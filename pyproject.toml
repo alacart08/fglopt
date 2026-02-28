@@ -19,4 +19,4 @@ build-backend = "setuptools.build_meta"
 where = ["src"]
 
 [project.scripts]
-fglopt = "fglopt.cli:main"
+fglopt = "fglopt.main:launch_console"
