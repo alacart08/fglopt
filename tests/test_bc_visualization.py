@@ -12,7 +12,7 @@ def _write_config(tmp_path):
         textwrap.dedent(
             """
             input_stl: "example.stl"
-            mesh_resolution: 4
+            mesh_resolution: 10
             volume_fraction: 0.4
             material:
               E: 210e9
@@ -34,7 +34,7 @@ def _write_config(tmp_path):
 
 def test_visualize_boundary_conditions_saves_artifact_in_headless(tmp_path, monkeypatch):
     config = _write_config(tmp_path)
-    mesh = DomainMesh(nx=4, ny=4, lx=1.0, ly=1.0)
+    mesh = DomainMesh(nx=10, ny=20, lx=1.0, ly=2.0)
     bc_manager = BCManager(config)
 
     output_path = tmp_path / "artifacts" / "bc_overlay.png"
