@@ -33,44 +33,6 @@ ConfigLoader → TopologyOptimizer → DomainMesh → FEASolver → Density Fiel
 
 ---
 
-## Repository Structure
-
-```
-fglopt/
-├── fglopt                        # Executable entry point (launches REPL)
-├── config.yaml                   # Default/example configuration
-├── requirements.txt              # Runtime + dev dependencies
-├── pyproject.toml                # Package metadata and build config
-├── AGENTS.md                     # Agent/developer guidelines
-├── src/
-│   └── fglopt/
-│       ├── __init__.py
-│       ├── main.py               # REPL command loop
-│       ├── utils/
-│       │   └── config_loader.py  # YAML config parsing and validation
-│       ├── mesh/
-│       │   └── domain_mesh.py    # 2D structured quad mesh generation
-│       └── fea/
-│           ├── bc_manager.py     # Boundary condition and load handling
-│           └── visualization.py  # Matplotlib BC overlay plots
-├── tests/
-│   ├── test_config_loader.py
-│   ├── test_domain_mesh.py
-│   ├── test_bc_manager.py
-│   ├── test_bc_visualization.py
-│   └── test_main.py
-├── docs/
-│   ├── fea_plan.md               # Living FEA implementation plan (read before FEA work)
-│   ├── architecture.md           # Architecture overview
-│   └── fea_big_picture.md        # Non-technical FEA primer
-└── examples/
-    └── cant_beam.stl             # Cantilever beam example geometry
-```
-
-All Python source lives under `src/fglopt/`. Do **not** move modules outside this layout.
-
----
-
 ## Development Environment
 
 **Python:** 3.11+
@@ -150,28 +112,7 @@ Total DOFs = 2 × number of nodes.
 
 ## YAML Config Schema
 
-```yaml
-input_stl: "examples/cant_beam.stl"
-mesh_resolution: 40
-length_x: 2.0
-length_y: 1.0
-volume_fraction: 0.4
-
-material:
-  E: 210e9    # Young's modulus (Pa)
-  nu: 0.3     # Poisson's ratio
-
-boundary_conditions:
-  fixed:
-    - selector: left_edge   # left_edge | right_edge | top_edge | bottom_edge
-      dofs: ["x", "y"]      # which displacement components to fix
-  loads:
-    - type: edge            # "edge" or "point"
-      selector: right_edge
-      direction: y          # "x" or "y"
-      magnitude: -1.0       # negative = downward
-```
-Edge selectors: `left_edge`, `right_edge`, `top_edge`, `bottom_edge` (geometric queries on the structured mesh).
+See `config.yaml` for the full schema. Edge selectors are `left_edge`, `right_edge`, `top_edge`, `bottom_edge` (geometric queries on the structured mesh).
 
 ---
 
@@ -246,6 +187,7 @@ When a phase is complete, **update the corresponding status in `docs/fea_plan.md
 6. Preserve current working behavior.
 7. Stability and clarity are preferred over cleverness.
 8. **Do not** hardcode 2D-specific assumptions (e.g. DOFs per node, spatial dimensions) outside of element-specific code — 3D extension is imminent.
+9. When multiple valid approaches exist for a design or implementation decision, **ask the user** before proceeding. If asked, conduct background research on each option and present a trade study covering tradeoffs, pros/cons, and a recommendation before any code is written.
 
 ---
 
